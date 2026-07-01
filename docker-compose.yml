@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    # ANTI-PATTERN 8: Using the 'latest' tag breaks reproducible builds
+    image: python:latest 
+    
+    # ANTI-PATTERN 9: Privileged mode gives the container root access to the host machine
+    privileged: true 
+    
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=production
+      # ANTI-PATTERN 10: Injecting AWS secrets in plain text in config files
+      - AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE 
+    volumes:
+      # ANTI-PATTERN 11: Mounting the entire host root filesystem into the container
+      - /:/host_root
